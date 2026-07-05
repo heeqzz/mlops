@@ -34,7 +34,7 @@ with mlflow.start_run() as run:
 
     mlflow.sklearn.log_model(
         sk_model=model,
-        artifact_path="fraud"
+        artifact_path="fraud",
     )
 
     y_pred = model.predict(X_test)
@@ -46,3 +46,4 @@ with mlflow.start_run() as run:
     mlflow.set_tag("Training Info", "Basic DT model for fraud classifier")
 
     print("RUN ID =", run.info.run_id)
+    

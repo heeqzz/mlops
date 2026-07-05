@@ -1,16 +1,21 @@
-import pandas as pd
-import mlflow
 from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.providers.standard.operators.python import PythonOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+from airflow.sdk import get_current_context
+from airflow.providers.standard.operators.python import PythonOperator
+import mlflow
+import pandas as pd
 
 def run():
-    mlflow.set_tracking_uri("http://host.docker.internal:8070")
-
-    run_id = "26e7fb4b06cb49abb892e7cece1e21a1"
-
-    model_uri = f"runs:/{run_id}/fraud"
+    context = get_current_context()
+    var = context["var"]
+    mlflow1 = var["json"].get("mlflow")
+    tracking_uri=mlflow1["tracking_uri"]
+    model_run_id = mlflow1["model_run_id"]
+    
+    mlflow.set_tracking_uri(tracking_uri)
+    
+    model_uri = f"runs:/{model_run_id}/fraud"
     local_model_path = mlflow.artifacts.download_artifacts(model_uri)
     model = mlflow.sklearn.load_model(local_model_path)
 
@@ -62,3 +67,4 @@ with DAG(
         task_id="predict2",
         python_callable=run,
     )
+    
