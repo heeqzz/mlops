@@ -46,4 +46,3 @@ with mlflow.start_run() as run:
     mlflow.set_tag("Training Info", "Basic DT model for fraud classifier")
 
     print("RUN ID =", run.info.run_id)
-    

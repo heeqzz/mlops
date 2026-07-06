@@ -9,9 +9,9 @@ import pandas as pd
 def run():
     context = get_current_context()
     var = context["var"]
-    mlflow1 = var["json"].get("mlflow")
-    tracking_uri=mlflow1["tracking_uri"]
-    model_run_id = mlflow1["model_run_id"]
+    mlflow_settings = var["json"].get("mlflow")
+    tracking_uri=mlflow_settings["tracking_uri"]
+    model_run_id = mlflow_settings["model_run_id"]
     
     mlflow.set_tracking_uri(tracking_uri)
     
@@ -67,4 +67,3 @@ with DAG(
         task_id="predict2",
         python_callable=run,
     )
-    
