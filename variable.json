@@ -1,0 +1,6 @@
+{
+    "mlflow": {
+        "tracking_uri": "http://host.docker.internal:8070",
+        "model_run_id": "26e7fb4b06cb49abb892e7cece1e21a1"
+    }
+}
